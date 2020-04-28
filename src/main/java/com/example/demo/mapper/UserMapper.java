@@ -1,10 +1,8 @@
 package com.example.demo.mapper;
 
-import com.example.demo.enity.User;
-import org.apache.ibatis.annotations.Delete;
+import com.example.demo.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 

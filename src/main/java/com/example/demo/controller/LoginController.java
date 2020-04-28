@@ -1,12 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.enity.User;
+import com.example.demo.entity.User;
 import com.example.demo.service.Impl.UserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
