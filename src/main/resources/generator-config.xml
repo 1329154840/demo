@@ -6,15 +6,15 @@
     <context id="MySQL2Tables" targetRuntime="MyBatis3">
 
         <commentGenerator>
-                    <property name="suppressAllComments" value="true" />
-                    <property name="addRemarkComments" value="true" />
+            <property name="suppressAllComments" value="true" />
+            <property name="addRemarkComments" value="true" />
         </commentGenerator>
 
         <!--数据源-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-            connectionURL="jdbc:mysql://127.0.0.1:3306/test"
-            userId="root"
-            password="123456">
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/test"
+                        userId="root"
+                        password="123456">
             <!--避免生成不必要的类-->
             <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
@@ -29,10 +29,10 @@
             <property name="trimStrings" value="false" />
         </javaModelGenerator>
 
-<!--         <sqlMapGenerator targetPackage="com.example.demo.mapper" -->
-<!--                          targetProject="src/main/java"> -->
-<!--             <property name="enableSubPackages" value="false" /> -->
-<!--         </sqlMapGenerator> -->
+        <!--         <sqlMapGenerator targetPackage="com.example.demo.mapper" -->
+        <!--                          targetProject="src/main/java"> -->
+        <!--             <property name="enableSubPackages" value="false" /> -->
+        <!--         </sqlMapGenerator> -->
 
 
         <!-- 客户端代码，生成易于使用的针对Model对象和XML配置文件 的代码
@@ -47,17 +47,17 @@
 
 
         <table tableName="user"
-                       domainObjectName="UserObject"
-                       enableCountByExample="false"
-                       enableUpdateByExample="false"
-                       enableDeleteByExample="false"
-                       enableSelectByExample="false"
-                       selectByExampleQueryId="false">
-                    <!-- 是否使用真实字段名，设置为false将自动驼峰转换 -->
-<!--                     <property name="useActualColumnNames" value="false" /> -->
-                    <!-- 还可以对表中的字段进行类型转换 -->
-                    <!-- 这里转换的原因是会自动将个位的int值自动转化为Boolean，所以指定为Integer -->
-<!--                     <columnOverride column="sex" javaType="Integer"/> -->
-                </table>
+               domainObjectName="UserObject"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <!-- 是否使用真实字段名，设置为false将自动驼峰转换 -->
+            <!--                     <property name="useActualColumnNames" value="false" /> -->
+            <!-- 还可以对表中的字段进行类型转换 -->
+            <!-- 这里转换的原因是会自动将个位的int值自动转化为Boolean，所以指定为Integer -->
+            <!--                     <columnOverride column="sex" javaType="Integer"/> -->
+        </table>
     </context>
 </generatorConfiguration>
