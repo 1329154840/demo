@@ -28,7 +28,8 @@ target/
 build/
 
 ### VS Code ###
-.vscode/,
+.vscode/
 
 ### Maven ##
 .mvn
+.DS_Store
