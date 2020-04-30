@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<!-- <script src="vue.js" type="text/javascript" charset="utf-8"></script> -->
+		<script src="js/vue.js"></script>
+		<script src="js/axios.min.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<input type="text"  placeholder="用户名" v-model="uid">
+			<input type="text"  placeholder="密码" v-model="passWord">
+			<button @click="onSubmit($event)">提交</button>
+
+		</div>
+	</body>
+	
+	<script type="text/javascript">
+	var app = new Vue({
+		el: '#app',
+		data: {
+			uid: '',
+			passWord: '',
+		},
+		methods:{
+			onSubmit: function(event) {
+				axios({
+					method:"post",
+					url:"http://127.0.0.1:8080/login",
+					withCredentials:true,
+					params: {
+						uid: this.uid,
+						passWord: this.passWord
+					}
+				}).then((res)=>{
+					alert(res.data);
+					console.log(res.data);
+				}).catch(err => {
+					console.log('error');
+				});     
+			}
+		}
+	})	
+	</script>
+</html>

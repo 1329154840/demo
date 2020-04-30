@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.annotation.LoginRequire;
 import com.example.demo.entity.User;
 import com.example.demo.service.Impl.UserServiceImpl;
 import org.slf4j.Logger;
@@ -13,9 +14,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.UUID;
-
 
 @RestController
 @RequestMapping("/")
@@ -40,11 +44,10 @@ public class LoginController {
      *
      * @return
      */
+    @LoginRequire
     @RequestMapping(value = "/findAll")
     public List<User> findAll() {
         List<User> users = userService.getAllUser();
-
-
         return userService.getAllUser();
 
 
@@ -53,17 +56,16 @@ public class LoginController {
     @RequestMapping("/login")
     public String login(HttpServletRequest request,
                         HttpServletResponse response,
-                        @RequestParam(value = "uid", required = false) Long uid,
-                        @RequestParam(value = "passWord", required = false) String passWord) {
+                        @RequestParam(value = "uid" ,required = false) Long uid,
+                        @RequestParam(value = "passWord", required= false) String passWord) {
         HttpSession session = request.getSession();
 
         Cookie[] cookieArray = request.getCookies();
         for (Cookie cookie : cookieArray) {
-            if (cookie.getName().equals("login")) {
+            if (cookie.getName().equals("token")) {
                 String uuid = cookie.getValue();
                 //查询session是否相等，相等验证通过
-                if (uuid != null && session.getAttribute("uuid").equals(uuid)) {
-                    System.out.println("3");
+                if (uuid != null && session.getAttribute("token").equals(uuid)) {
                     LOGGER.info("cookie校验通过");
                     LOGGER.info("uid: {} 登录",session.getAttribute("uid"));
                     return "true";
@@ -72,21 +74,21 @@ public class LoginController {
         }
         //cookie还没有、不合法或者过期了，重新写cookie和session
         if (uid == null || passWord == null){
-            System.out.println("uid == null || passWord == null");
+            LOGGER.info("parm == null");
             return "false";
         }
         //查询db是否验证通过
         User user = userService.getUserByLogin(uid, passWord);
 
         if (user==null){
-            System.out.println("user==null");
+            LOGGER.info("db无user");
             return "false";
         }
         String uuid = UUID.randomUUID().toString();
         session.setAttribute("uid", user.getUid());
         session.setAttribute("userName", user.getUserName());
-        session.setAttribute("uuid", uuid);
-        Cookie newCookie = new Cookie("login", uuid);
+        session.setAttribute("token", uuid);
+        Cookie newCookie = new Cookie("token", uuid);
         //cookie有效时间 单位秒 设置5分钟
         newCookie.setMaxAge(300);
         //放回response
@@ -98,7 +100,7 @@ public class LoginController {
 
     @RequestMapping("/logout")
     public String logout(HttpServletResponse response){
-        Cookie newCookie = new Cookie("login", null);
+        Cookie newCookie = new Cookie("token", null);
         newCookie.setMaxAge(0);
         response.addCookie(newCookie);
         return "logout";

@@ -59,5 +59,6 @@
             <!-- 这里转换的原因是会自动将个位的int值自动转化为Boolean，所以指定为Integer -->
             <!--                     <columnOverride column="sex" javaType="Integer"/> -->
         </table>
+
     </context>
 </generatorConfiguration>

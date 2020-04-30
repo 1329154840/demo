@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     @Autowired
     private UserMapper userMapper;
 
@@ -22,6 +23,4 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUser() {
        return userMapper.findAll();
     }
-
-
 }
